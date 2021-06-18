@@ -1,6 +1,6 @@
 import {getStandalone, getLocal} from 'mockttp'
 
-const mockServerManager = getStandalone()
+const mockServerManager = getStandalone({ debug: true })
 const mockServer = mockServerManager.start()
 
 // Mockttp does not have a health check endpoint, so I create a separate
