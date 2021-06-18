@@ -1,0 +1,39 @@
+diff --git a/node_modules/mockttp/dist/client/mockttp-client.js b/node_modules/mockttp/dist/client/mockttp-client.js
+index d92005c..912f931 100644
+--- a/node_modules/mockttp/dist/client/mockttp-client.js
++++ b/node_modules/mockttp/dist/client/mockttp-client.js
+@@ -329,6 +329,18 @@ class MockttpClient extends mockttp_1.AbstractMockttp {
+             }
+         });
+     }
++    useConfig(mockServerConfig) {
++        return __awaiter(this, void 0, void 0, function* () {
++            // Also open a stream connection, for 2-way communication we might need later.
++            this.mockServerStream = yield this.openStreamToMockServer(mockServerConfig);
++            // Create a subscription client, preconfigured & ready to connect if on() is called later:
++            this.prepareSubscriptionClientToMockServer(mockServerConfig);
++            // We don't persist the config or resolve this promise until everything is set up
++            this.mockServerConfig = mockServerConfig;
++            // Load the schema on server start, so we can check for feature support
++            this.mockServerSchema = (yield this.queryMockServer(introspection_query_1.introspectionQuery)).__schema;
++        });
++    }
+     start(portConfig) {
+         return __awaiter(this, void 0, void 0, function* () {
+             if (this.mockServerConfig)
+@@ -341,14 +353,7 @@ class MockttpClient extends mockttp_1.AbstractMockttp {
+                 }),
+                 body: JSON.stringify(this.mockServerOptions)
+             });
+-            // Also open a stream connection, for 2-way communication we might need later.
+-            this.mockServerStream = yield this.openStreamToMockServer(mockServerConfig);
+-            // Create a subscription client, preconfigured & ready to connect if on() is called later:
+-            this.prepareSubscriptionClientToMockServer(mockServerConfig);
+-            // We don't persist the config or resolve this promise until everything is set up
+-            this.mockServerConfig = mockServerConfig;
+-            // Load the schema on server start, so we can check for feature support
+-            this.mockServerSchema = (yield this.queryMockServer(introspection_query_1.introspectionQuery)).__schema;
++            return this.useConfig(mockServerConfig)
+         });
+     }
+     stop() {

@@ -3,6 +3,9 @@ import {getRemote} from 'mockttp'
 
 const server = getRemote({ standaloneServerUrl: 'http://localhost:1773' })
 
+// @ts-ignore
+before(() => server.useConfig({ port: 8080, mockRoot: 'http://localhost:8080' }));
+
 describe('Mockttp serves mocked responses', () => {
   it('to cy.request', () => {
     // This won't work because server has been started but this client instance
