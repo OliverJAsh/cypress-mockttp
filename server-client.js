@@ -1,6 +1,6 @@
 import {getRemote} from 'mockttp'
 
-const server = getRemote({ standaloneServerUrl: 'http://localhost:1773' })
+export const server = getRemote({ standaloneServerUrl: 'http://localhost:1773' })
 
 before(async () => {
   // Starts the server on a dynamic port. The port number that can later be

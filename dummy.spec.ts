@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
-import {getRemote} from 'mockttp'
-
-const server = getRemote({ standaloneServerUrl: 'http://localhost:1773' })
+import { server } from "./server-client";
 
 describe('Mockttp serves mocked responses', () => {
   it('to cy.request', () => {
