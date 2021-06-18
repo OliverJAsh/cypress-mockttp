@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import {getRemote} from 'mockttp'
 
-const server = getRemote()
+const server = getRemote({ standaloneServerUrl: 'http://localhost:1773' })
 
 const mockedResponse = 'this is a mocked response'
 
