@@ -1,7 +1,10 @@
 /// <reference types="cypress" />
-import { server } from "./server-client";
+import { getServer } from "./server-client";
 
 describe('Mockttp serves mocked responses', () => {
+
+  const server = getServer();
+
   it('to cy.request', () => {
     // This won't work because server has been started but this client instance
     // hasn't been configured with the port.
